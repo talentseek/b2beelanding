@@ -57,16 +57,17 @@ export async function sendReminderEmail(lead: Lead): Promise<boolean> {
           <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
             .header { text-align: center; padding: 30px 0; border-bottom: 3px solid #f97316; }
-            .logo { font-size: 32px; font-weight: bold; color: #f97316; }
+            .logo { max-width: 200px; height: auto; }
             .content { padding: 30px 0; }
             .button { display: inline-block; background: #f97316; color: white; padding: 14px 30px; text-decoration: none; border-radius: 8px; font-weight: 600; margin: 20px 0; }
             .footer { text-align: center; padding: 20px 0; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px; }
+            .footer-logo { max-width: 150px; height: auto; margin-bottom: 10px; }
             .highlight { background: #fef3c7; padding: 15px; border-radius: 8px; margin: 20px 0; }
           </style>
         </head>
         <body>
           <div class="header">
-            <div class="logo">🐝 B2Bee</div>
+            <img src="${BASE_URL}/logo.png" alt="B2Bee" class="logo" />
           </div>
           
           <div class="content">
@@ -99,6 +100,7 @@ export async function sendReminderEmail(lead: Lead): Promise<boolean> {
           </div>
           
           <div class="footer">
+            <img src="${BASE_URL}/logofooter.png" alt="B2Bee" class="footer-logo" />
             <p>B2Bee - AI Automation for Small Business</p>
             <p><a href="${BASE_URL}" style="color: #f97316; text-decoration: none;">www.b2bee.ai</a></p>
           </div>
@@ -153,16 +155,17 @@ export async function sendBookingConfirmationEmail(booking: Booking): Promise<bo
           <style>
             body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; line-height: 1.6; color: #333; max-width: 600px; margin: 0 auto; padding: 20px; }
             .header { text-align: center; padding: 30px 0; border-bottom: 3px solid #f97316; }
-            .logo { font-size: 32px; font-weight: bold; color: #f97316; }
+            .logo { max-width: 200px; height: auto; }
             .content { padding: 30px 0; }
             .booking-details { background: #fef3c7; padding: 20px; border-radius: 8px; margin: 20px 0; border-left: 4px solid #f97316; }
             .footer { text-align: center; padding: 20px 0; border-top: 1px solid #e5e7eb; color: #6b7280; font-size: 14px; }
+            .footer-logo { max-width: 150px; height: auto; margin-bottom: 10px; }
             .emoji { font-size: 24px; }
           </style>
         </head>
         <body>
           <div class="header">
-            <div class="logo">🐝 B2Bee</div>
+            <img src="${BASE_URL}/logo.png" alt="B2Bee" class="logo" />
           </div>
           
           <div class="content">
@@ -206,6 +209,7 @@ export async function sendBookingConfirmationEmail(booking: Booking): Promise<bo
           </div>
           
           <div class="footer">
+            <img src="${BASE_URL}/logofooter.png" alt="B2Bee" class="footer-logo" />
             <p>B2Bee - AI Automation for Small Business</p>
             <p><a href="${BASE_URL}" style="color: #f97316; text-decoration: none;">www.b2bee.ai</a></p>
           </div>
