@@ -13,9 +13,18 @@ export async function GET(req: NextRequest) {
     
     if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
       console.log('[Cron] Unauthorized cron attempt');
-      console.log('[Cron] Expected:', `Bearer ${cronSecret?.substring(0, 10)}...`);
-      console.log('[Cron] Received:', authHeader?.substring(0, 20) + '...');
-      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+      console.log('[Cron] Expected length:', `Bearer ${cronSecret}`.length);
+      console.log('[Cron] Received length:', authHeader?.length);
+      console.log('[Cron] Expected (first 30):', `Bearer ${cronSecret}`.substring(0, 30));
+      console.log('[Cron] Received (first 30):', authHeader?.substring(0, 30));
+      console.log('[Cron] Match check:', authHeader === `Bearer ${cronSecret}`);
+      return NextResponse.json({ 
+        error: 'Unauthorized',
+        debug: {
+          expectedLength: `Bearer ${cronSecret}`.length,
+          receivedLength: authHeader?.length,
+        }
+      }, { status: 401 });
     }
 
     console.log('[Cron] ===== Running send-reminders job =====');
