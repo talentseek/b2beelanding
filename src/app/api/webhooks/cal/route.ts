@@ -67,10 +67,12 @@ export async function POST(req: NextRequest) {
 
         if (lead) {
           console.log('[Cal Webhook] ✅ Found lead by email:', lead.id, lead.email);
+          console.log('[Cal Webhook] Lead has beeId:', lead.beeId);
           
           const newBooking = await db.booking.create({
             data: {
               leadId: lead.id,
+              beeId: lead.beeId, // Associate with the same bee as the lead
               providerId: payload.uid,
               status: triggerEvent === 'BOOKING_CREATED' ? 'CONFIRMED' : 'PENDING',
               startTime: payload.startTime ? new Date(payload.startTime) : undefined,

@@ -13,10 +13,11 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Find the most recent lead with this email
+    // Find the most recent lead with this email (include bee info)
     const lead = await db.lead.findFirst({
       where: { email },
       orderBy: { createdAt: 'desc' },
+      include: { bee: true },
     });
 
     if (!lead) {
@@ -30,6 +31,7 @@ export async function POST(req: NextRequest) {
     const booking = await db.booking.create({
       data: {
         leadId: lead.id,
+        beeId: lead.beeId, // Associate with the same bee as the lead
         providerId: `manual_${Date.now()}`,
         status: 'CONFIRMED',
         startTime: new Date(Date.now() + 24 * 60 * 60 * 1000), // Tomorrow
@@ -51,6 +53,7 @@ export async function POST(req: NextRequest) {
         id: booking.id,
         leadId: lead.id,
         leadName: `${lead.firstName} ${lead.lastName}`,
+        beeName: lead.bee?.name || 'None',
         status: booking.status,
         startTime: booking.startTime,
       },
