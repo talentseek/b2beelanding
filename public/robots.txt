@@ -9,5 +9,5 @@ Disallow: /sign-in
 Disallow: /api/
 
 # Sitemap
-Sitemap: https://b2bee.ai/sitemap.xml
+Sitemap: https://www.b2bee.ai/sitemap.xml
 

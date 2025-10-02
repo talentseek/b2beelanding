@@ -6,14 +6,25 @@ export const dynamic = 'force-dynamic';
 export const revalidate = 3600; // Revalidate every hour
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://b2bee.ai';
+  const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://www.b2bee.ai';
 
   try {
-    // Fetch all active bees
-    const bees = await db.bee.findMany({
+    // Fetch all active bees with timeout
+    const beesPromise = db.bee.findMany({
       where: { isActive: true },
       select: { slug: true, updatedAt: true },
     });
+    
+    // Race with timeout to ensure fast response
+    const bees = await Promise.race([
+      beesPromise,
+      new Promise<null>((resolve) => setTimeout(() => resolve(null), 3000))
+    ]);
+    
+    // If timeout or no bees, use fallback
+    if (!bees || !Array.isArray(bees)) {
+      throw new Error('Database timeout or no data');
+    }
 
     const beePages = bees.map((bee) => ({
       url: `${siteUrl}/bee/${bee.slug}`,
