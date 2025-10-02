@@ -16,17 +16,20 @@ export async function GET(req: NextRequest) {
     console.log('[Cron] Running send-reminders job...');
 
     // Find leads that:
-    // 1. Were created more than 10 minutes ago
+    // 1. Were created more than 1 minute ago (10 minutes in production)
     // 2. Have status = 'NEW' (not booked)
     // 3. Haven't been sent a reminder yet
-    const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+    const delayMinutes = parseInt(process.env.REMINDER_DELAY_MINUTES || '1', 10);
+    const delayTime = new Date(Date.now() - delayMinutes * 60 * 1000);
+    
+    console.log(`[Cron] Checking for leads created before ${delayTime.toISOString()} (${delayMinutes} minutes ago)`);
 
     const leadsToRemind = await db.lead.findMany({
       where: {
         status: 'NEW',
         reminderSentAt: null,
         createdAt: {
-          lte: tenMinutesAgo,
+          lte: delayTime,
         },
       },
       include: {
