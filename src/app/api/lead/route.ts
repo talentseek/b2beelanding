@@ -22,18 +22,26 @@ const resend = process.env.RESEND_API_KEY
 
 export async function POST(req: NextRequest) {
   try {
+    console.log('[Lead API] Received lead submission request');
+    
     const body = await req.json();
+    console.log('[Lead API] Request body:', JSON.stringify(body, null, 2));
+    
     const validatedData = leadSchema.parse(body);
+    console.log('[Lead API] Validation successful');
 
     // Find bee if beeSlug is provided
     let bee = null;
     if (validatedData.beeSlug) {
+      console.log('[Lead API] Looking up bee:', validatedData.beeSlug);
       bee = await db.bee.findUnique({
         where: { slug: validatedData.beeSlug },
       });
+      console.log('[Lead API] Bee found:', bee ? bee.name : 'none');
     }
 
     // Create lead
+    console.log('[Lead API] Creating lead in database...');
     const lead = await db.lead.create({
       data: {
         firstName: validatedData.firstName,
@@ -48,6 +56,8 @@ export async function POST(req: NextRequest) {
         referrer: validatedData.referrer || undefined,
       },
     });
+
+    console.log('[Lead API] Lead created successfully:', lead.id);
 
     // Send notification email
     if (resend && process.env.RESEND_FROM_EMAIL && process.env.RESEND_NOTIFY_EMAIL) {
@@ -85,12 +95,19 @@ export async function POST(req: NextRequest) {
         .join('\n'),
     };
 
+    console.log('[Lead API] Returning success response');
     return NextResponse.json({
+      success: true,
       leadId: lead.id,
       calPrefill,
     });
   } catch (error) {
-    console.error('Error creating lead:', error);
+    console.error('[Lead API] Error creating lead:', error);
+    console.error('[Lead API] Error details:', {
+      name: error instanceof Error ? error.name : 'Unknown',
+      message: error instanceof Error ? error.message : String(error),
+      stack: error instanceof Error ? error.stack : undefined,
+    });
 
     if (error instanceof z.ZodError) {
       return NextResponse.json(

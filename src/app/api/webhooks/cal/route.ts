@@ -3,13 +3,23 @@ import { db } from '@/lib/db';
 
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    // Validate webhook secret (optional but recommended)
+    const webhookSecret = process.env.CALCOM_WEBHOOK_SECRET;
+    if (webhookSecret) {
+      const signature = req.headers.get('x-cal-signature-256');
+      // In production, you'd verify the signature here
+      // For now, we'll just log it
+      console.log('Cal.com webhook signature:', signature ? 'present' : 'missing');
+    }
 
-    // Cal.com webhook payload structure (simplified)
-    // You'll need to adjust this based on actual Cal.com webhook format
+    const body = await req.json();
+    console.log('Cal.com webhook received:', { triggerEvent: body.triggerEvent, uid: body.payload?.uid });
+
+    // Cal.com webhook payload structure
     const { triggerEvent, payload } = body;
 
     if (!payload?.uid) {
+      console.error('Invalid webhook payload: missing uid');
       return NextResponse.json({ error: 'Invalid webhook payload' }, { status: 400 });
     }
 
@@ -19,8 +29,36 @@ export async function POST(req: NextRequest) {
     });
 
     if (!booking) {
-      // If no booking found, this might be a new booking from Cal.com
+      // If no booking found, try to find lead by email and create booking
       console.log('No booking found for Cal.com webhook:', payload.uid);
+      
+      if (payload.attendees?.[0]?.email) {
+        const lead = await db.lead.findFirst({
+          where: { email: payload.attendees[0].email },
+          orderBy: { createdAt: 'desc' },
+        });
+
+        if (lead) {
+          console.log('Found lead by email, creating booking:', lead.id);
+          await db.booking.create({
+            data: {
+              leadId: lead.id,
+              providerId: payload.uid,
+              status: triggerEvent === 'BOOKING_CREATED' ? 'CONFIRMED' : 'PENDING',
+              startTime: payload.startTime ? new Date(payload.startTime) : undefined,
+              endTime: payload.endTime ? new Date(payload.endTime) : undefined,
+            },
+          });
+
+          await db.lead.update({
+            where: { id: lead.id },
+            data: { status: 'BOOKED' },
+          });
+
+          console.log('Booking created successfully for lead:', lead.id);
+        }
+      }
+
       return NextResponse.json({ received: true });
     }
 
