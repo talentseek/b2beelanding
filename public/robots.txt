@@ -1,0 +1,13 @@
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Disallow admin pages
+User-agent: *
+Disallow: /admin
+Disallow: /sign-in
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://b2bee.ai/sitemap.xml
+
