@@ -83,13 +83,6 @@ export const metadata: Metadata = {
     images: ["/logo.png"],
     creator: "@b2bee",
   },
-  icons: {
-    icon: [
-      { url: "/logo.png", sizes: "any" },
-      { url: "/logo.png", type: "image/png" },
-    ],
-    apple: [{ url: "/logo.png" }],
-  },
   manifest: "/site.webmanifest",
   robots: {
     index: true,
