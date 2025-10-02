@@ -1,0 +1,7 @@
+---
+alwaysApply: true
+description: "shadcn/ui usage"
+---
+- Use primitives (Button, Card, Dialog, Input, Badge)
+- Grid layouts, generous spacing
+- Rounded-2xl, soft shadows

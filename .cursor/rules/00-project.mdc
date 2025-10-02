@@ -1,0 +1,10 @@
+---
+alwaysApply: true
+description: "Project context for b2beelanding"
+---
+# Project Context
+**Name**: b2beelanding
+**Slug**: b2beelanding
+**Database**: b2beelanding
+## One-Liner
+A landing page for b2bee.ai an ai automation agency that creates automations (called bees) that assist small businesses with various tasks for instance automating social media or automating sales outreach. EOF

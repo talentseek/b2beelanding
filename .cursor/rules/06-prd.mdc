@@ -1,0 +1,5 @@
+---
+alwaysApply: false
+description: "PRD prompt"
+---
+Produce a PRD for a Next.js (App Router + TS) app using Tailwind + shadcn/ui, Clerk auth, Prisma/Postgres, including goals, personas, MVP, schema, routes, APIs, risks, milestones, acceptance criteria.

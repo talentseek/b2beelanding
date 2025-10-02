@@ -1,0 +1,6 @@
+---
+alwaysApply: true
+description: "Prisma rules"
+---
+- PrismaClient singleton
+- Migrations via `prisma migrate dev`

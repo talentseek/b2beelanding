@@ -1,0 +1,8 @@
+---
+alwaysApply: true
+description: "Next.js (App Router) rules"
+---
+- App Router, strict TS
+- Prefer Server Components; `"use client"` where needed
+- Zod validation at API boundaries
+- `@/*` import alias

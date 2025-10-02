@@ -1,0 +1,305 @@
+# Product Requirements Document (PRD)
+**Project:** b2beelanding  
+**Working Title:** B2Bee Landing Page MVP  
+**Owner:** Emily / B2Bee.ai  
+**Date:** 2025-10-02  
+**Status:** Draft → For Sprint Planning
+
+---
+
+## 1) Working Title
+**B2Bee Landing Page MVP (“b2beelanding”)
+
+---
+
+## 2) Executive Summary
+B2Bee.ai needs a high-converting landing page that introduces our AI “Bees” (automation bundles) for small businesses, explains benefits in playful, bee-themed language, and converts visitors into booked demos.  
+The ultimate business goal: **capture leads and drive demo bookings** (Cal.com).
+
+**Tone & Voice:** Playful, pun-friendly (“Buzzing Into Business”), simple and clear for non-technical SMBs.
+
+**What We Do (site copy anchors):**
+- 🐝 **Inbound Support** — AI replies for email, Instagram, Facebook, and phone inquiries.
+- ⚡ **Outbound Campaigns** — Automated marketing and lead gen outreach.
+- 📊 **Smart Analytics** — Reports and insights to stay ahead and make data-driven decisions.
+
+---
+
+## 3) Problem Statement
+Small business owners waste time on repetitive marketing and sales tasks and lack affordable, easy-to-use automation. They need a simple way to understand and access AI without technical overhead.
+
+**Positioning line (for page):**  
+**Our Bees:** No days off · No sick days · No tea breaks · No vape breaks · No HR issues · No recruitment fees · **Works 24/7 bringing you the honey.**
+
+---
+
+## 4) Goals & Non-Goals
+**Primary Goals**
+- Increase **demo sign-ups** via prominent CTAs and smooth booking flow.
+- Educate visitors on **what each Bee does** and the value vs. manual work.
+- Establish **brand credibility** with testimonials and concise benefit proofs.
+
+**Non-Goals (MVP)**
+- No full app beyond landing + lead capture.
+- No live AI demos inside the page.
+- No multi-language or multi-region rollout (yet).
+
+**Near-term Consideration**
+- Structure content so **new Bees** can be added easily (admin configurable).
+
+**Bees in MVP**
+- **Social Bee** (automates social media)
+- **Sales Bee** (automates sales outreach; phrase: “Book meetings” not “Close deals”)
+- **Bespoke Bee** (custom requirements; quote after intake)
+
+All flows must **capture lead details** and push to **Cal.com** with prefilled info.
+
+---
+
+## 5) Users & Personas
+**Primary Audience**
+- Small business owners and managers in **retail, fitness, real estate, and SaaS startups**; typically non-technical and budget-conscious.
+
+**Motivations & Pain Points**
+- Want more customers with less effort.
+- Lack time/staff to run consistent outreach and marketing.
+- Prefer clear pricing/benefit, fast setup, minimal technical lift.
+
+---
+
+## 6) Core Use Cases / User Journeys
+1) **Discover → Understand → Book**
+   - See hero value → scan Bees & benefits → click **Book a Demo** → prefilled Cal.com → confirm booking.
+2) **Compare Bees → Pick One → Book**
+   - Open a Bee detail → view features & outcomes → CTA → prefilled Cal.com → confirm.
+3) **Custom Request (Bespoke Bee)**
+   - Open Bespoke → add notes/requirements → submit lead → routed to Cal.com (optional or follow-up email).
+
+---
+
+## 7) Scope & Feature List (MVP)
+**Must-Haves**
+- **Hero section** with short background video/animation.
+- **Bees overview** (cards for Social, Sales, Bespoke) + quick benefits grid.
+- **Testimonials** (3+ credible quotes with names/roles).
+- **Pricing teaser** (from/starting, simple; full pricing handled in demo).
+- **Primary CTA(s)**: “Book a Demo” (sticky header + multiple placements).
+- **Lead capture drawer/modal** (First Name, Last Name, Company, Email; Notes on Bespoke) that **prefills Cal.com**.
+- **Cal.com embed/overlay** for booking.
+- **Admin (basic)** to view leads & booking status; add/edit “Bee” entries.
+
+**Nice-to-Haves**
+- Blog & SEO content, animated “Bee” illustrations/micro-interactions, case studies, chatbot.
+
+**Out of Scope (MVP)**
+- Full account area for customers.
+- In-page conversational AI demos.
+- Internationalization.
+
+---
+
+## 8) Architecture Overview (Tech Stack)
+- **Frontend:** Next.js (App Router, TypeScript), Tailwind CSS, shadcn/ui, light Framer Motion animations.
+- **Auth:** Clerk (Admin area only).
+- **Backend:** Next.js Route Handlers (`/api/*`).
+- **DB/ORM:** PostgreSQL + Prisma.
+- **Email:** Resend (lead follow-ups and internal alerts).
+- **Scheduling:** Cal.com embed/overlay (prefill lead data via query params).
+- **Infra/Deploy:** Vercel.
+- **Config:** Environment variables for Clerk, DB, Resend, Cal links.
+
+---
+
+## 9) Data Model (First Pass – Prisma)
+```prisma
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  role      Role     @default(ADMIN) // Admin-only for MVP
+  clerkId   String?  @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  ADMIN
+}
+
+model Bee {
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  name        String
+  tagline     String?
+  description String?
+  icon        String?          
+  features    Json?            
+  priceMonthly Int?            
+  isActive    Boolean  @default(true)
+  ctaCalLink  String?          
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  testimonials Testimonial[]
+  leads        Lead[]
+  bookings     Booking[]
+}
+
+model Lead {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String
+  company     String?
+  notes       String?          
+  beeId       String?
+  bee         Bee?     @relation(fields: [beeId], references: [id])
+  status      LeadStatus @default(NEW)
+  consent     Boolean   @default(true)
+
+  utmSource   String?
+  utmMedium   String?
+  utmCampaign String?
+  referrer    String?
+
+  bookings    Booking[]
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([email])
+  @@index([beeId, status])
+}
+
+enum LeadStatus {
+  NEW
+  CONTACTED
+  BOOKED
+  NO_SHOW
+  WON
+  LOST
+}
+
+model Booking {
+  id           String   @id @default(cuid())
+  provider     String   @default("calcom")
+  providerId   String?        
+  startTime    DateTime?
+  endTime      DateTime?
+  status       BookingStatus @default(PENDING)
+  beeId        String?
+  bee          Bee?      @relation(fields: [beeId], references: [id])
+  leadId       String
+  lead         Lead      @relation(fields: [leadId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([leadId, status])
+}
+
+enum BookingStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  RESCHEDULED
+}
+
+model Testimonial {
+  id        String   @id @default(cuid())
+  author    String
+  role      String?
+  company   String?
+  quote     String
+  rating    Int?     
+  avatarUrl String?
+  beeId     String?
+  bee       Bee?     @relation(fields: [beeId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+---
+
+## 10) Pages & Routes
+**Public**
+- `/` — Landing (Hero, Bees, testimonials, pricing, CTA → Cal.com).
+- `/bee/[slug]` — Bee detail page (optional).
+
+**Admin**
+- `/admin` — Dashboard: leads, conversions.
+- `/admin/bees` — Manage Bee cards.
+- `/admin/testimonials` — Manage testimonials.
+
+**API**
+- `POST /api/lead` — Save lead.
+- `GET /api/bees` — Public Bee list.
+- `POST /api/booking` — Optional booking sync.
+- `POST /api/webhooks/cal` — Optional Cal webhook.
+- `POST /api/notify/lead` — Internal notify.
+
+---
+
+## 11) API Contracts
+**POST `/api/lead`**
+- Request: `{ firstName, lastName, email, company?, notes?, beeSlug?, utm?, referrer? }`
+- Response: `{ leadId, calPrefill }`
+
+**POST `/api/webhooks/cal`**
+- Receives Cal event JSON → Updates Booking.
+
+**GET `/api/bees`**
+- Returns Bee cards.
+
+---
+
+## 12) Security / Privacy
+- HTTPS by default.
+- Zod validation, rate limiting.
+- Minimal PII storage.
+- GDPR consent checkbox + links to Privacy/Terms.
+- Clerk for admin auth.
+
+---
+
+## 13) Analytics
+- Track: CTA clicks, lead submit, Cal open, booking confirmed, scroll depth.
+- Store UTM on Lead.
+- Analytics provider: Plausible/PostHog.
+
+---
+
+## 14) Milestones
+**Phase 0:** Setup stack  
+**Phase 1:** Landing MVP  
+**Phase 2:** Admin panel  
+**Phase 3:** Analytics + polish  
+**Phase 4:** Webhooks + extras  
+
+---
+
+## 15) Acceptance Criteria
+- Live at **b2bee.ai** (Vercel).
+- Hero + Bees grid + testimonials + pricing teaser + CTAs working.
+- Lead capture works, data stored, Resend notification triggered.
+- Cal.com embed works with prefilled info.
+- Responsive & mobile-first, LCP < 2.5s.
+- Admin dashboard shows leads & allows edits.
+- Analytics events firing correctly.
+- GDPR compliance basics met.
+
+---
+
+## Appendix A — Copy Blocks
+Hero Heading: *Buzzing Into Business*  
+Subheading: *We help small businesses work smarter, faster, and at a fraction of the cost — with AI solutions that never stop buzzing.*  
+CTA: **Book a Demo**
+
+Bee Cards:
+- Social Bee — Create · Schedule · Post · Engage · Buzz online  
+- Sales Bee — Prospect · Personalize · Sequence · Book meetings · Track  
+- Bespoke Bee — Tell us your workflow, we’ll tailor a Bee.
+
+Proof Strip: *No days off · No sick days · No tea breaks · No vape breaks · No HR issues · Works 24/7.*
+
+---
