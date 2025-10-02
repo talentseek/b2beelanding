@@ -24,6 +24,16 @@ export async function POST(req: NextRequest) {
     console.log('[Cal Webhook] UID:', payload?.uid);
     console.log('[Cal Webhook] Attendees:', payload?.attendees);
 
+    // Handle PING events (test webhooks don't have uid)
+    if (triggerEvent === 'PING') {
+      console.log('[Cal Webhook] ✅ PING received - webhook is configured correctly!');
+      return NextResponse.json({ 
+        received: true,
+        message: 'Webhook configured successfully' 
+      });
+    }
+
+    // Real booking events should have a uid
     if (!payload?.uid) {
       console.error('[Cal Webhook] Invalid webhook payload: missing uid');
       console.error('[Cal Webhook] Payload:', payload);
