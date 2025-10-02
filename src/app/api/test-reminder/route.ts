@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
 import { sendReminderEmail } from '@/lib/emails';
 
-// Manual test endpoint to send a reminder immediately
+// Manual test endpoint to send a reminder email immediately (for testing)
 export async function POST(req: NextRequest) {
   try {
     const { email } = await req.json();

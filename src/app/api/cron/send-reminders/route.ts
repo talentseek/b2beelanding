@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    console.log('[Cron] Running send-reminders job...');
+    console.log('[Cron] ===== Running send-reminders job =====');
 
     // Find leads that:
     // 1. Were created more than 1 minute ago (10 minutes in production)
