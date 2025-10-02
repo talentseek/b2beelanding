@@ -31,7 +31,23 @@ async function main() {
   const socialBee = await prisma.bee.upsert({
     where: { slug: 'social-bee' },
     update: {
+      name: 'Social Bee',
+      tagline: 'Your 24/7 Social Media Manager',
+      description:
+        'Automates social media posting, engagement, and content creation across all platforms. Never miss a post or engagement opportunity again. Set-up fees apply.',
       icon: '/socialbee.png',
+      features: [
+        'Create engaging content automatically',
+        'Schedule posts across all platforms',
+        'Engage with followers 24/7',
+        'Track performance and analytics',
+        'Multi-platform support (Instagram, Facebook, Twitter, LinkedIn)',
+        'Content calendar management',
+      ],
+      priceMonthly: 299,
+      isActive: true,
+      sortOrder: 1,
+      ctaCalLink: process.env.NEXT_PUBLIC_CALCOM_LINK,
     },
     create: {
       slug: 'social-bee',
@@ -58,7 +74,23 @@ async function main() {
   const salesBee = await prisma.bee.upsert({
     where: { slug: 'sales-bee' },
     update: {
+      name: 'Sales Bee',
+      tagline: 'Your AI Sales Team',
+      description:
+        'Automates prospecting, personalized outreach, and meeting booking to fill your calendar with qualified leads. Set-up fees apply.',
       icon: '/salesbee.png',
+      features: [
+        'Find and qualify ideal prospects',
+        'Personalized multichannel outreach',
+        'Automated follow-up sequences',
+        'Book meetings automatically',
+        'Track and optimize campaigns',
+        'CRM integration',
+      ],
+      priceMonthly: 499,
+      isActive: true,
+      sortOrder: 2,
+      ctaCalLink: process.env.NEXT_PUBLIC_CALCOM_LINK,
     },
     create: {
       slug: 'sales-bee',
@@ -85,7 +117,22 @@ async function main() {
   const bespokeBee = await prisma.bee.upsert({
     where: { slug: 'bespoke-bee' },
     update: {
+      name: 'Bespoke Bee',
+      tagline: 'Custom AI Solutions',
+      description:
+        "Tell us your unique workflow and we'll build a custom Bee tailored to your exact business needs. Your automation, your way. Set-up fees apply.",
       icon: '/bespokebee.png',
+      features: [
+        'Fully customized automation',
+        'Integrate with your existing tools',
+        'Ongoing support and updates',
+        'Dedicated success manager',
+        'Flexible pricing based on complexity',
+        'White-label options available',
+      ],
+      isActive: true,
+      sortOrder: 3,
+      ctaCalLink: process.env.NEXT_PUBLIC_CALCOM_LINK,
     },
     create: {
       slug: 'bespoke-bee',
