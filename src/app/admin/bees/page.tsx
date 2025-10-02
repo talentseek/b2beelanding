@@ -11,6 +11,10 @@ import {
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 
+// Force dynamic rendering
+export const dynamic = 'force-dynamic';
+export const revalidate = 10;
+
 export default async function BeesPage() {
   const bees = await db.bee.findMany({
     orderBy: { sortOrder: 'asc' },

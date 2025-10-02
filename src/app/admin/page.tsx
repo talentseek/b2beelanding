@@ -10,6 +10,10 @@ import {
 } from '@/components/ui/table';
 import { Badge } from '@/components/ui/badge';
 
+// Force dynamic rendering and revalidate every 10 seconds
+export const dynamic = 'force-dynamic';
+export const revalidate = 10;
+
 export default async function AdminDashboard() {
   const [leads, bees, bookings] = await Promise.all([
     db.lead.findMany({
@@ -45,9 +49,24 @@ export default async function AdminDashboard() {
 
   return (
     <div className="container mx-auto py-10 px-4">
-      <div className="mb-8">
-        <h1 className="text-4xl font-bold">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Manage your bees, leads, and bookings</p>
+      <div className="mb-8 flex items-center justify-between">
+        <div>
+          <h1 className="text-4xl font-bold">Admin Dashboard</h1>
+          <p className="text-muted-foreground">
+            Manage your bees, leads, and bookings
+            <span className="text-xs ml-2">
+              • Updated: {new Date().toLocaleTimeString()}
+            </span>
+          </p>
+        </div>
+        <form>
+          <button
+            type="submit"
+            className="px-4 py-2 text-sm bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+          >
+            🔄 Refresh
+          </button>
+        </form>
       </div>
 
       {/* Stats Grid */}
