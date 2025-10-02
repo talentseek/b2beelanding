@@ -7,20 +7,30 @@ export async function POST(req: NextRequest) {
     const webhookSecret = process.env.CALCOM_WEBHOOK_SECRET;
     if (webhookSecret) {
       const signature = req.headers.get('x-cal-signature-256');
-      // In production, you'd verify the signature here
-      // For now, we'll just log it
-      console.log('Cal.com webhook signature:', signature ? 'present' : 'missing');
+      console.log('[Cal Webhook] Signature:', signature ? 'present' : 'missing');
     }
 
     const body = await req.json();
-    console.log('Cal.com webhook received:', { triggerEvent: body.triggerEvent, uid: body.payload?.uid });
+    
+    // Log the entire payload for debugging
+    console.log('[Cal Webhook] ===== FULL PAYLOAD =====');
+    console.log(JSON.stringify(body, null, 2));
+    console.log('[Cal Webhook] =======================');
 
     // Cal.com webhook payload structure
     const { triggerEvent, payload } = body;
+    
+    console.log('[Cal Webhook] Event:', triggerEvent);
+    console.log('[Cal Webhook] UID:', payload?.uid);
+    console.log('[Cal Webhook] Attendees:', payload?.attendees);
 
     if (!payload?.uid) {
-      console.error('Invalid webhook payload: missing uid');
-      return NextResponse.json({ error: 'Invalid webhook payload' }, { status: 400 });
+      console.error('[Cal Webhook] Invalid webhook payload: missing uid');
+      console.error('[Cal Webhook] Payload:', payload);
+      return NextResponse.json({ 
+        error: 'Invalid webhook payload - missing uid',
+        received: body 
+      }, { status: 400 });
     }
 
     // Find booking by providerId (Cal.com booking UID)
@@ -30,17 +40,25 @@ export async function POST(req: NextRequest) {
 
     if (!booking) {
       // If no booking found, try to find lead by email and create booking
-      console.log('No booking found for Cal.com webhook:', payload.uid);
+      console.log('[Cal Webhook] No existing booking found for:', payload.uid);
       
-      if (payload.attendees?.[0]?.email) {
+      // Try multiple ways to find the email
+      const email = payload.attendees?.[0]?.email || 
+                   payload.responses?.email || 
+                   payload.metadata?.email;
+      
+      console.log('[Cal Webhook] Extracted email:', email);
+      
+      if (email) {
         const lead = await db.lead.findFirst({
-          where: { email: payload.attendees[0].email },
+          where: { email: email },
           orderBy: { createdAt: 'desc' },
         });
 
         if (lead) {
-          console.log('Found lead by email, creating booking:', lead.id);
-          await db.booking.create({
+          console.log('[Cal Webhook] ✅ Found lead by email:', lead.id, lead.email);
+          
+          const newBooking = await db.booking.create({
             data: {
               leadId: lead.id,
               providerId: payload.uid,
@@ -55,11 +73,27 @@ export async function POST(req: NextRequest) {
             data: { status: 'BOOKED' },
           });
 
-          console.log('Booking created successfully for lead:', lead.id);
+          console.log('[Cal Webhook] ✅ Booking created successfully:', newBooking.id);
+          console.log('[Cal Webhook] Lead status updated to BOOKED');
+          
+          return NextResponse.json({ 
+            received: true, 
+            bookingCreated: true,
+            bookingId: newBooking.id 
+          });
+        } else {
+          console.log('[Cal Webhook] ❌ No lead found with email:', email);
         }
+      } else {
+        console.log('[Cal Webhook] ❌ No email found in payload');
+        console.log('[Cal Webhook] Tried: attendees[0].email, responses.email, metadata.email');
       }
 
-      return NextResponse.json({ received: true });
+      return NextResponse.json({ 
+        received: true,
+        bookingCreated: false,
+        reason: email ? 'Lead not found' : 'Email not found in payload'
+      });
     }
 
     // Update booking based on event type
