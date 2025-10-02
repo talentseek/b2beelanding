@@ -90,10 +90,11 @@ export function BeesGrid({ bees }: BeesGridProps) {
                   )}
 
                   {bee.priceMonthly && (
-                    <div className="pt-4">
+                    <div className="pt-4 space-y-2">
                       <Badge variant="secondary" className="text-base px-3 py-1">
                         From £{bee.priceMonthly}/month
                       </Badge>
+                      <p className="text-xs text-muted-foreground">Set-up fees apply.</p>
                     </div>
                   )}
 

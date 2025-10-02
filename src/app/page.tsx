@@ -208,7 +208,7 @@ function getDefaultBees(): Bee[] {
       slug: 'social-bee',
       name: 'Social Bee',
       tagline: 'Your 24/7 Social Media Manager',
-      description: 'Automates social media posting, engagement, and content creation across all platforms. Set-up fees apply.',
+      description: 'Automates social media posting, engagement, and content creation across all platforms.',
       icon: '/socialbee.png',
       features: [
         'Create engaging content',
@@ -224,7 +224,7 @@ function getDefaultBees(): Bee[] {
       slug: 'sales-bee',
       name: 'Sales Bee',
       tagline: 'Your AI Sales Team',
-      description: 'Automates prospecting, personalized outreach, and meeting booking to fill your calendar. Set-up fees apply.',
+      description: 'Automates prospecting, personalized outreach, and meeting booking to fill your calendar.',
       icon: '/salesbee.png',
       features: [
         'Find ideal prospects',
@@ -240,7 +240,7 @@ function getDefaultBees(): Bee[] {
       slug: 'bespoke-bee',
       name: 'Bespoke Bee',
       tagline: 'Custom AI Solutions',
-      description: 'Tell us your unique workflow and we\'ll build a custom Bee tailored to your business needs. Set-up fees apply.',
+      description: 'Tell us your unique workflow and we\'ll build a custom Bee tailored to your business needs.',
       icon: '/bespokebee.png',
       features: [
         'Fully customized automation',

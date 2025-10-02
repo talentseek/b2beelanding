@@ -34,7 +34,7 @@ async function main() {
       name: 'Social Bee',
       tagline: 'Your 24/7 Social Media Manager',
       description:
-        'Automates social media posting, engagement, and content creation across all platforms. Never miss a post or engagement opportunity again. Set-up fees apply.',
+        'Automates social media posting, engagement, and content creation across all platforms. Never miss a post or engagement opportunity again.',
       icon: '/socialbee.png',
       features: [
         'Create engaging content automatically',
@@ -54,7 +54,7 @@ async function main() {
       name: 'Social Bee',
       tagline: 'Your 24/7 Social Media Manager',
       description:
-        'Automates social media posting, engagement, and content creation across all platforms. Never miss a post or engagement opportunity again. Set-up fees apply.',
+        'Automates social media posting, engagement, and content creation across all platforms. Never miss a post or engagement opportunity again.',
       icon: '/socialbee.png',
       features: [
         'Create engaging content automatically',
@@ -77,7 +77,7 @@ async function main() {
       name: 'Sales Bee',
       tagline: 'Your AI Sales Team',
       description:
-        'Automates prospecting, personalized outreach, and meeting booking to fill your calendar with qualified leads. Set-up fees apply.',
+        'Automates prospecting, personalized outreach, and meeting booking to fill your calendar with qualified leads.',
       icon: '/salesbee.png',
       features: [
         'Find and qualify ideal prospects',
@@ -97,7 +97,7 @@ async function main() {
       name: 'Sales Bee',
       tagline: 'Your AI Sales Team',
       description:
-        'Automates prospecting, personalized outreach, and meeting booking to fill your calendar with qualified leads. Set-up fees apply.',
+        'Automates prospecting, personalized outreach, and meeting booking to fill your calendar with qualified leads.',
       icon: '/salesbee.png',
       features: [
         'Find and qualify ideal prospects',
@@ -120,7 +120,7 @@ async function main() {
       name: 'Bespoke Bee',
       tagline: 'Custom AI Solutions',
       description:
-        "Tell us your unique workflow and we'll build a custom Bee tailored to your exact business needs. Your automation, your way. Set-up fees apply.",
+        "Tell us your unique workflow and we'll build a custom Bee tailored to your exact business needs. Your automation, your way.",
       icon: '/bespokebee.png',
       features: [
         'Fully customized automation',
@@ -139,7 +139,7 @@ async function main() {
       name: 'Bespoke Bee',
       tagline: 'Custom AI Solutions',
       description:
-        "Tell us your unique workflow and we'll build a custom Bee tailored to your exact business needs. Your automation, your way. Set-up fees apply.",
+        "Tell us your unique workflow and we'll build a custom Bee tailored to your exact business needs. Your automation, your way.",
       icon: '/bespokebee.png',
       features: [
         'Fully customized automation',

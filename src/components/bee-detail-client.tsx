@@ -156,9 +156,12 @@ export function BeeDetailClient({ bee }: BeeDetailClientProps) {
             <p className="text-2xl text-muted-foreground">{bee.tagline}</p>
           )}
           {bee.priceMonthly && (
-            <Badge variant="secondary" className="text-xl px-6 py-2">
-              From £{bee.priceMonthly}/month
-            </Badge>
+            <div className="space-y-2">
+              <Badge variant="secondary" className="text-xl px-6 py-2">
+                From £{bee.priceMonthly}/month
+              </Badge>
+              <p className="text-sm text-muted-foreground">Set-up fees apply.</p>
+            </div>
           )}
           <div className="pt-4">
             <Button
