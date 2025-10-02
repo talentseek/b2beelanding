@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/lib/db';
+import { sendBookingConfirmationEmail } from '@/lib/emails';
 
 export async function POST(req: NextRequest) {
   try {
@@ -87,6 +88,26 @@ export async function POST(req: NextRequest) {
 
           console.log('[Cal Webhook] ✅ Booking created successfully:', newBooking.id);
           console.log('[Cal Webhook] Lead status updated to BOOKED');
+          
+          // Send booking confirmation email
+          try {
+            const bookingWithDetails = await db.booking.findUnique({
+              where: { id: newBooking.id },
+              include: {
+                lead: {
+                  include: { bee: true },
+                },
+                bee: true,
+              },
+            });
+
+            if (bookingWithDetails) {
+              await sendBookingConfirmationEmail(bookingWithDetails);
+            }
+          } catch (emailError) {
+            console.error('[Cal Webhook] Failed to send confirmation email:', emailError);
+            // Don't fail the webhook if email fails
+          }
           
           return NextResponse.json({ 
             received: true, 
