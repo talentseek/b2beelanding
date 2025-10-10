@@ -814,7 +814,7 @@ function FinalCTASection({ abmPage, calLink }: { abmPage: ABMPageProps['abmPage'
             Ready to see this in action for {abmPage.company}, {abmPage.firstName}?
           </h2>
           <p className="text-xl md:text-2xl text-muted-foreground mb-8">
-            Book a 15-minute demo and we&apos;ll show you exactly how Sales Bee can transform your outreach.
+            Book a 30-minute demo and we&apos;ll show you exactly how Sales Bee can transform your outreach.
             <br />
             <span className="font-semibold text-primary">No commitment. No pressure. Just results.</span>
           </p>
@@ -831,7 +831,7 @@ function FinalCTASection({ abmPage, calLink }: { abmPage: ABMPageProps['abmPage'
           <div className="mt-8 flex flex-wrap justify-center gap-6 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-green-500" />
-              <span>15-minute call</span>
+              <span>30-minute call</span>
             </div>
             <div className="flex items-center gap-2">
               <CheckCircle2 className="w-5 h-5 text-green-500" />
