@@ -223,6 +223,282 @@ async function main() {
 
   console.log('✅ Created testimonials');
 
+  // Create ABM Pages
+  const danielBeerPage = await prisma.aBMPage.upsert({
+    where: { linkedinIdentifier: 'dbeer' },
+    update: {
+      linkedinUrl: 'https://www.linkedin.com/in/dbeer/',
+      firstName: 'Daniel',
+      lastName: 'Beer',
+      title: 'Associate Director',
+      company: 'The Store Room',
+      targetMarket: 'Plumbers, Electricians and Carpenters',
+      targetLocation: 'Solihull, United Kingdom',
+      mockCompanies: [
+        'ABC Plumbing & Heating Ltd',
+        'Smith Electrical Services',
+        'Elite Carpentry Solutions',
+        'ProFix Plumbing',
+        'Midlands Electric Co',
+        'Premier Carpentry Works',
+        'HomeFlow Plumbing',
+        'Voltage Electrical Ltd',
+      ],
+      mockLeads: [
+        {
+          name: 'John Smith',
+          company: 'ABC Plumbing & Heating Ltd',
+          title: 'Owner & Director',
+        },
+        {
+          name: 'Sarah Williams',
+          company: 'Smith Electrical Services',
+          title: 'Managing Director',
+        },
+        {
+          name: 'Michael Johnson',
+          company: 'Elite Carpentry Solutions',
+          title: 'Founder',
+        },
+        {
+          name: 'David Brown',
+          company: 'ProFix Plumbing',
+          title: 'Business Owner',
+        },
+        {
+          name: 'Emma Davis',
+          company: 'Midlands Electric Co',
+          title: 'Director',
+        },
+        {
+          name: 'James Wilson',
+          company: 'Premier Carpentry Works',
+          title: 'Owner',
+        },
+      ],
+      mockAnalytics: {
+        replies: 47,
+        meetings: 12,
+        openRate: 68,
+        replyRate: 24,
+      },
+      heroMessage: null, // Will use default template
+      benefitPoints: [
+        'Fill storage units faster',
+        'Target local tradesmen',
+        'Automated outreach 24/7',
+        'Qualified leads only',
+      ],
+      isActive: true,
+    },
+    create: {
+      linkedinIdentifier: 'dbeer',
+      linkedinUrl: 'https://www.linkedin.com/in/dbeer/',
+      firstName: 'Daniel',
+      lastName: 'Beer',
+      title: 'Associate Director',
+      company: 'The Store Room',
+      targetMarket: 'Plumbers, Electricians and Carpenters',
+      targetLocation: 'Solihull, United Kingdom',
+      mockCompanies: [
+        'ABC Plumbing & Heating Ltd',
+        'Smith Electrical Services',
+        'Elite Carpentry Solutions',
+        'ProFix Plumbing',
+        'Midlands Electric Co',
+        'Premier Carpentry Works',
+        'HomeFlow Plumbing',
+        'Voltage Electrical Ltd',
+      ],
+      mockLeads: [
+        {
+          name: 'John Smith',
+          company: 'ABC Plumbing & Heating Ltd',
+          title: 'Owner & Director',
+        },
+        {
+          name: 'Sarah Williams',
+          company: 'Smith Electrical Services',
+          title: 'Managing Director',
+        },
+        {
+          name: 'Michael Johnson',
+          company: 'Elite Carpentry Solutions',
+          title: 'Founder',
+        },
+        {
+          name: 'David Brown',
+          company: 'ProFix Plumbing',
+          title: 'Business Owner',
+        },
+        {
+          name: 'Emma Davis',
+          company: 'Midlands Electric Co',
+          title: 'Director',
+        },
+        {
+          name: 'James Wilson',
+          company: 'Premier Carpentry Works',
+          title: 'Owner',
+        },
+      ],
+      mockAnalytics: {
+        replies: 47,
+        meetings: 12,
+        openRate: 68,
+        replyRate: 24,
+      },
+      heroMessage: null,
+      benefitPoints: [
+        'Fill storage units faster',
+        'Target local tradesmen',
+        'Automated outreach 24/7',
+        'Qualified leads only',
+      ],
+      isActive: true,
+    },
+  });
+
+  const michaelBeckettPage = await prisma.aBMPage.upsert({
+    where: { linkedinIdentifier: 'mjcbeckett' },
+    update: {
+      linkedinUrl: 'https://www.linkedin.com/in/mjcbeckett/',
+      firstName: 'Michael',
+      lastName: 'Beckett',
+      title: 'Founder & CEO',
+      company: 'B2Bee',
+      targetMarket: 'Small Business Owners and Entrepreneurs',
+      targetLocation: 'United Kingdom',
+      mockCompanies: [
+        'Green Leaf Consulting',
+        'Urban Kitchen Co',
+        'FitPro Studios',
+        'Digital Edge Marketing',
+        'Artisan Coffee House',
+        'TechStart Solutions',
+        'Bloom Beauty Salon',
+        'Peak Performance Coaching',
+      ],
+      mockLeads: [
+        {
+          name: 'Sophie Turner',
+          company: 'Green Leaf Consulting',
+          title: 'Founder',
+        },
+        {
+          name: 'Oliver Hayes',
+          company: 'Urban Kitchen Co',
+          title: 'Owner & Head Chef',
+        },
+        {
+          name: 'Emily Roberts',
+          company: 'FitPro Studios',
+          title: 'Managing Director',
+        },
+        {
+          name: 'Lucas Bennett',
+          company: 'Digital Edge Marketing',
+          title: 'CEO',
+        },
+        {
+          name: 'Isabella Clarke',
+          company: 'Artisan Coffee House',
+          title: 'Owner',
+        },
+        {
+          name: 'Noah Phillips',
+          company: 'TechStart Solutions',
+          title: 'Founder & CTO',
+        },
+      ],
+      mockAnalytics: {
+        replies: 63,
+        meetings: 18,
+        openRate: 72,
+        replyRate: 31,
+      },
+      heroMessage: null,
+      benefitPoints: [
+        'Scale without hiring',
+        'Focus on what you do best',
+        'Predictable growth',
+        'AI-powered efficiency',
+      ],
+      isActive: true,
+    },
+    create: {
+      linkedinIdentifier: 'mjcbeckett',
+      linkedinUrl: 'https://www.linkedin.com/in/mjcbeckett/',
+      firstName: 'Michael',
+      lastName: 'Beckett',
+      title: 'Founder & CEO',
+      company: 'B2Bee',
+      targetMarket: 'Small Business Owners and Entrepreneurs',
+      targetLocation: 'United Kingdom',
+      mockCompanies: [
+        'Green Leaf Consulting',
+        'Urban Kitchen Co',
+        'FitPro Studios',
+        'Digital Edge Marketing',
+        'Artisan Coffee House',
+        'TechStart Solutions',
+        'Bloom Beauty Salon',
+        'Peak Performance Coaching',
+      ],
+      mockLeads: [
+        {
+          name: 'Sophie Turner',
+          company: 'Green Leaf Consulting',
+          title: 'Founder',
+        },
+        {
+          name: 'Oliver Hayes',
+          company: 'Urban Kitchen Co',
+          title: 'Owner & Head Chef',
+        },
+        {
+          name: 'Emily Roberts',
+          company: 'FitPro Studios',
+          title: 'Managing Director',
+        },
+        {
+          name: 'Lucas Bennett',
+          company: 'Digital Edge Marketing',
+          title: 'CEO',
+        },
+        {
+          name: 'Isabella Clarke',
+          company: 'Artisan Coffee House',
+          title: 'Owner',
+        },
+        {
+          name: 'Noah Phillips',
+          company: 'TechStart Solutions',
+          title: 'Founder & CTO',
+        },
+      ],
+      mockAnalytics: {
+        replies: 63,
+        meetings: 18,
+        openRate: 72,
+        replyRate: 31,
+      },
+      heroMessage: null,
+      benefitPoints: [
+        'Scale without hiring',
+        'Focus on what you do best',
+        'Predictable growth',
+        'AI-powered efficiency',
+      ],
+      isActive: true,
+    },
+  });
+
+  console.log('✅ Created ABM pages:', {
+    danielBeer: `${danielBeerPage.firstName} ${danielBeerPage.lastName}`,
+    michaelBeckett: `${michaelBeckettPage.firstName} ${michaelBeckettPage.lastName}`,
+  });
+
   console.log('🎉 Database seeded successfully!');
 }
 

@@ -38,6 +38,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
             >
               Testimonials
             </Link>
+            <Link
+              href="/admin/abm-pages"
+              className="text-sm font-medium hover:text-primary transition-colors"
+            >
+              ABM Pages
+            </Link>
           </nav>
           <div className="flex items-center gap-4">
             {session?.user?.email && (

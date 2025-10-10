@@ -155,3 +155,33 @@ enum BookingStatus {
   CANCELLED
   RESCHEDULED
 }
+
+model ABMPage {
+  id                 String   @id @default(cuid())
+  linkedinIdentifier String   @unique // e.g. "dbeer"
+  linkedinUrl        String // Full LinkedIn URL
+  firstName          String
+  lastName           String
+  title              String? // Job title
+  company            String
+  
+  // Target market for simulation
+  targetMarket       String // e.g. "Plumbers, Electricians and Carpenters"
+  targetLocation     String // e.g. "Solihull, United Kingdom"
+  
+  // Simulation data (JSON)
+  mockCompanies      Json? // Array of company names
+  mockLeads          Json? // Array of lead objects {name, company, title}
+  mockAnalytics      Json? // {replies, meetings, openRate, etc.}
+  
+  // Personalization
+  heroMessage        String? // Custom hero message
+  benefitPoints      Json? // Array of benefit strings
+  
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([linkedinIdentifier])
+  @@index([isActive])
+}
