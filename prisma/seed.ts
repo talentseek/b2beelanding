@@ -500,6 +500,24 @@ async function main() {
   });
 
   console.log('🎉 Database seeded successfully!');
+
+  // Create initial boat fund contributions
+  console.log('⛵ Creating boat fund contributions...');
+  
+  const boatContributions = [
+    { amount: 50000, description: 'Initial seed money' }, // £500
+    { amount: 125000, description: 'Social Bee monthly commission' }, // £1,250
+    { amount: 75000, description: 'Sales Bee setup fee' }, // £750
+    { amount: 20000, description: 'Bespoke Bee consultation' }, // £200
+  ];
+
+  for (const contribution of boatContributions) {
+    await prisma.boatFundContribution.create({
+      data: contribution,
+    });
+  }
+
+  console.log('✅ Boat fund seeded with', boatContributions.length, 'contributions');
 }
 
 main()

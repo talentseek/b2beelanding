@@ -185,3 +185,13 @@ model ABMPage {
   @@index([linkedinIdentifier])
   @@index([isActive])
 }
+
+model BoatFundContribution {
+  id          String   @id @default(cuid())
+  amount      Int // Amount in pence
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([createdAt])
+}
