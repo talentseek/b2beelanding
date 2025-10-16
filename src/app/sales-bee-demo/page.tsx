@@ -297,41 +297,42 @@ function FindingCompaniesSection() {
     setIsAnimating(true);
     let currentCount = 0;
 
-    const interval = setInterval(() => {
-      if (currentCount < DEMO_DATA.companies.length) {
-        currentCount++;
-        setVisibleCompanies(currentCount);
-      } else {
-        clearInterval(interval);
-        // Reset after showing all
-        setTimeout(() => {
-          setVisibleCompanies(0);
-          setIsAnimating(false);
-        }, 2500);
-      }
-    }, 400);
-
-    return () => clearInterval(interval);
+    // Small delay before starting
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        if (currentCount < DEMO_DATA.companies.length) {
+          currentCount++;
+          setVisibleCompanies(currentCount);
+        } else {
+          clearInterval(interval);
+          // Reset after showing all
+          setTimeout(() => {
+            setVisibleCompanies(0);
+            setIsAnimating(false);
+          }, 2500);
+        }
+      }, 400);
+    }, 300);
   }, [isInView, isAnimating]);
 
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-900/10"
+      className="min-h-screen flex items-start justify-center px-4 pt-32 pb-20 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-900/10"
     >
       <div className="max-w-4xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 mb-4">
+          <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-[oklch(0.65_0.22_45)]/20 flex items-center justify-center">
               <span className="text-xl font-bold text-[oklch(0.65_0.22_45)]">2</span>
             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Finding Companies</h2>
-          <p className="text-xl text-muted-foreground">
+          <h2 className="text-3xl md:text-5xl font-bold mb-3">Finding Companies</h2>
+          <p className="text-lg text-muted-foreground">
             AI is scanning databases to find your ideal prospects
           </p>
         </motion.div>
