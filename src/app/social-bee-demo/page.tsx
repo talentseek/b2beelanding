@@ -95,36 +95,9 @@ export default function SocialBeeDemoPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-950/20 dark:to-purple-900/10">
-      {/* Sticky Header */}
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center justify-between px-4">
-          <div className="flex items-center gap-2">
-            <img src="/logo.png" alt="B2Bee" className="h-10 w-auto" />
-          </div>
-          <Button asChild className="bg-[oklch(0.65_0.22_45)] hover:bg-[oklch(0.60_0.22_45)]">
-            <a href={calLink} target="_blank" rel="noopener noreferrer">
-              Book Your Demo
-            </a>
-          </Button>
-        </div>
-      </header>
-
       {/* Single Page Demo */}
-      <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-[calc(100vh-4rem)]">
+      <div className="container mx-auto px-4 py-8 flex items-center justify-center min-h-screen">
         <div className="max-w-5xl w-full">
-          {/* Header */}
-          <div className="text-center mb-8">
-            <Badge className="mb-4 bg-[oklch(0.65_0.22_45)] hover:bg-[oklch(0.60_0.22_45)]">
-              Social Bee Demo
-            </Badge>
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              Your AI Social Media Manager
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Watch Social Bee create, approve, and schedule posts automatically
-            </p>
-          </div>
-
           {/* Main Demo Area */}
           <div className="grid lg:grid-cols-2 gap-6">
             {/* Left Side - AI Generation & Review */}
@@ -331,15 +304,22 @@ export default function SocialBeeDemoPage() {
               )}
             </div>
           </div>
+        </div>
+      </div>
 
-          {/* Bottom CTA */}
+      {/* Bottom CTA Section */}
+      <div className="py-16 bg-white dark:bg-gray-900">
+        <div className="container mx-auto px-4">
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 1 }}
-            className="mt-8 text-center"
+            className="max-w-2xl mx-auto text-center"
           >
-            <p className="text-muted-foreground mb-4">
+            <h2 className="text-3xl font-bold mb-4">
+              Ready to Transform Your Social Media?
+            </h2>
+            <p className="text-muted-foreground mb-6">
               See Social Bee manage your entire social media presence
             </p>
             <Button
