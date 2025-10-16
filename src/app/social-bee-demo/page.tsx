@@ -249,7 +249,7 @@ export default function SocialBeeDemoPage() {
                   </div>
                   <div>
                     <h3 className="font-semibold">Content Calendar</h3>
-                    <p className="text-xs text-muted-foreground">This week's schedule</p>
+                    <p className="text-xs text-muted-foreground">This week&apos;s schedule</p>
                   </div>
                 </div>
 
