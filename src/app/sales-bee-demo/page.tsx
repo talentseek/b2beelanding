@@ -406,26 +406,26 @@ function FindingLeadsSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center px-4 py-20"
+      className="min-h-screen flex items-start justify-center px-4 pt-32 pb-20"
     >
-      <div className="max-w-5xl mx-auto w-full">
+      <div className="max-w-4xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 mb-4">
+          <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-[oklch(0.65_0.22_45)]/20 flex items-center justify-center">
               <span className="text-xl font-bold text-[oklch(0.65_0.22_45)]">3</span>
             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Finding Decision Makers</h2>
-          <p className="text-xl text-muted-foreground">
+          <h2 className="text-3xl md:text-5xl font-bold mb-3">Finding Decision Makers</h2>
+          <p className="text-lg text-muted-foreground">
             Identifying the right people at each company
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-3 max-w-3xl mx-auto">
           {DEMO_DATA.leads.slice(0, visibleLeads).map((lead, index) => (
             <motion.div
               key={index}
@@ -433,23 +433,23 @@ function FindingLeadsSection() {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ delay: index * 0.1 }}
             >
-              <Card className="p-6 bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-orange-950/20 shadow-lg">
-                <div className="flex items-start gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gradient-to-br from-[oklch(0.65_0.22_45)] to-amber-500 flex items-center justify-center text-white font-bold text-lg">
+              <Card className="p-4 bg-gradient-to-br from-white to-orange-50 dark:from-gray-800 dark:to-orange-950/20 shadow-lg">
+                <div className="flex items-start gap-3">
+                  <div className="w-12 h-12 rounded-full bg-gradient-to-br from-[oklch(0.65_0.22_45)] to-amber-500 flex items-center justify-center text-white font-bold text-base flex-shrink-0">
                     {lead.name
                       .split(' ')
                       .map((n) => n[0])
                       .join('')}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-lg">{lead.name}</h3>
-                      <Linkedin className="w-4 h-4 text-blue-600" />
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-0.5">
+                      <h3 className="font-semibold text-base truncate">{lead.name}</h3>
+                      <Linkedin className="w-4 h-4 text-blue-600 flex-shrink-0" />
                     </div>
-                    <p className="text-sm text-muted-foreground">{lead.title}</p>
-                    <p className="text-sm font-medium">{lead.company}</p>
+                    <p className="text-xs text-muted-foreground line-clamp-1">{lead.title}</p>
+                    <p className="text-xs font-medium truncate">{lead.company}</p>
                   </div>
-                  <Target className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
+                  <Target className="w-4 h-4 text-[oklch(0.65_0.22_45)] flex-shrink-0" />
                 </div>
               </Card>
             </motion.div>
@@ -509,29 +509,29 @@ function BuildingSequencesSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-900/10"
+      className="min-h-screen flex items-start justify-center px-4 pt-32 pb-20 bg-gradient-to-br from-purple-50 to-pink-50 dark:from-purple-950/20 dark:to-pink-900/10"
     >
-      <div className="max-w-5xl mx-auto w-full">
+      <div className="max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 mb-4">
+          <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-[oklch(0.65_0.22_45)]/20 flex items-center justify-center">
               <span className="text-xl font-bold text-[oklch(0.65_0.22_45)]">4</span>
             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">
+          <h2 className="text-3xl md:text-5xl font-bold mb-3">
             Building Multichannel Sequences
           </h2>
-          <p className="text-xl text-muted-foreground">
+          <p className="text-lg text-muted-foreground">
             Sales Bee creates personalized messages for each prospect
           </p>
         </motion.div>
 
-        <Card className="p-8 bg-white dark:bg-gray-800 shadow-2xl">
-          <div className="space-y-6">
+        <Card className="p-6 bg-white dark:bg-gray-800 shadow-2xl">
+          <div className="space-y-4">
             {sequence.map((step, index) => {
               const Icon = step.icon;
               const isActive = index < activeStep;
@@ -546,41 +546,41 @@ function BuildingSequencesSection() {
                   className="relative"
                 >
                   <div
-                    className={`flex items-center gap-4 p-4 rounded-lg transition-all ${
+                    className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
                       isCurrent
                         ? 'bg-[oklch(0.65_0.22_45)]/10 border-2 border-[oklch(0.65_0.22_45)]'
                         : 'bg-gray-50 dark:bg-gray-900'
                     }`}
                   >
                     <div
-                      className={`w-12 h-12 rounded-full flex items-center justify-center ${
+                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
                         step.color === 'blue'
                           ? 'bg-blue-100 dark:bg-blue-900'
                           : 'bg-green-100 dark:bg-green-900'
                       }`}
                     >
                       <Icon
-                        className={`w-6 h-6 ${
+                        className={`w-5 h-5 ${
                           step.color === 'blue' ? 'text-blue-600' : 'text-green-600'
                         }`}
                       />
                     </div>
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{step.label}</h3>
-                      <p className="text-sm text-muted-foreground">{step.delay}</p>
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-base truncate">{step.label}</h3>
+                      <p className="text-xs text-muted-foreground">{step.delay}</p>
                     </div>
-                    {isActive && <CheckCircle2 className="w-6 h-6 text-green-500" />}
+                    {isActive && <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />}
                     {isCurrent && (
                       <motion.div
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 1, repeat: Infinity }}
                       >
-                        <MessageSquare className="w-6 h-6 text-[oklch(0.65_0.22_45)]" />
+                        <MessageSquare className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
                       </motion.div>
                     )}
                   </div>
                   {index < sequence.length - 1 && (
-                    <div className="w-0.5 h-6 bg-gray-200 dark:bg-gray-700 ml-6 my-1" />
+                    <div className="w-0.5 h-4 bg-gray-200 dark:bg-gray-700 ml-5 my-1" />
                   )}
                 </motion.div>
               );
@@ -591,11 +591,11 @@ function BuildingSequencesSection() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-6 p-4 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"
+              className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"
             >
               <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
-                <CheckCircle2 className="w-5 h-5" />
-                <span className="font-medium">Sequence ready! AI has personalized all messages.</span>
+                <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
+                <span className="font-medium text-sm">Sequence ready! AI has personalized all messages.</span>
               </div>
             </motion.div>
           )}
