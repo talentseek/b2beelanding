@@ -751,26 +751,26 @@ function AnalyticsSection() {
   return (
     <section
       ref={ref}
-      className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-900/10"
+      className="min-h-screen flex items-start justify-center px-4 pt-32 pb-20 bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-900/10"
     >
-      <div className="max-w-5xl mx-auto w-full">
+      <div className="max-w-3xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="text-center mb-12"
+          className="text-center mb-8"
         >
-          <div className="inline-flex items-center gap-2 mb-4">
+          <div className="inline-flex items-center gap-2 mb-3">
             <div className="w-10 h-10 rounded-full bg-[oklch(0.65_0.22_45)]/20 flex items-center justify-center">
               <span className="text-xl font-bold text-[oklch(0.65_0.22_45)]">6</span>
             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-4">Watch Your Results Grow</h2>
-          <p className="text-xl text-muted-foreground">
+          <h2 className="text-3xl md:text-5xl font-bold mb-3">Watch Your Results Grow</h2>
+          <p className="text-lg text-muted-foreground">
             Real results from Sales Bee campaigns in the first 30 days
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-4">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -780,17 +780,17 @@ function AnalyticsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-8 bg-white dark:bg-gray-800 shadow-xl hover:shadow-2xl transition-shadow">
-                  <div className="flex items-start justify-between mb-4">
-                    <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-green-500/20 flex items-center justify-center">
-                      <Icon className="w-6 h-6 text-[oklch(0.65_0.22_45)]" />
+                <Card className="p-5 bg-white dark:bg-gray-800 shadow-xl hover:shadow-2xl transition-shadow">
+                  <div className="flex items-start justify-between mb-3">
+                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-green-500/20 flex items-center justify-center">
+                      <Icon className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
                     </div>
                   </div>
-                  <div className="text-4xl md:text-5xl font-bold text-[oklch(0.65_0.22_45)] mb-2">
+                  <div className="text-3xl md:text-4xl font-bold text-[oklch(0.65_0.22_45)] mb-1">
                     {stat.value}
                     {stat.suffix}
                   </div>
-                  <div className="text-lg text-muted-foreground">{stat.label}</div>
+                  <div className="text-base text-muted-foreground">{stat.label}</div>
                 </Card>
               </motion.div>
             );
