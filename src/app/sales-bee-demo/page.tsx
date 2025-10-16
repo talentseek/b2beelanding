@@ -757,20 +757,20 @@ function AnalyticsSection() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          className="text-center mb-8"
+          className="text-center mb-6"
         >
-          <div className="inline-flex items-center gap-2 mb-3">
+          <div className="inline-flex items-center gap-2 mb-2">
             <div className="w-10 h-10 rounded-full bg-[oklch(0.65_0.22_45)]/20 flex items-center justify-center">
               <span className="text-xl font-bold text-[oklch(0.65_0.22_45)]">6</span>
             </div>
           </div>
-          <h2 className="text-3xl md:text-5xl font-bold mb-3">Watch Your Results Grow</h2>
-          <p className="text-lg text-muted-foreground">
+          <h2 className="text-3xl md:text-4xl font-bold mb-2">Watch Your Results Grow</h2>
+          <p className="text-base text-muted-foreground">
             Real results from Sales Bee campaigns in the first 30 days
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-3 max-w-2xl mx-auto">
           {stats.map((stat, index) => {
             const Icon = stat.icon;
             return (
@@ -780,17 +780,17 @@ function AnalyticsSection() {
                 animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                 transition={{ delay: index * 0.1 }}
               >
-                <Card className="p-5 bg-white dark:bg-gray-800 shadow-xl hover:shadow-2xl transition-shadow">
-                  <div className="flex items-start justify-between mb-3">
-                    <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-green-500/20 flex items-center justify-center">
-                      <Icon className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
+                <Card className="p-4 bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className="flex items-center justify-between mb-2">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-green-500/20 flex items-center justify-center">
+                      <Icon className="w-4 h-4 text-[oklch(0.65_0.22_45)]" />
                     </div>
                   </div>
-                  <div className="text-3xl md:text-4xl font-bold text-[oklch(0.65_0.22_45)] mb-1">
+                  <div className="text-2xl md:text-3xl font-bold text-[oklch(0.65_0.22_45)] mb-1">
                     {stat.value}
                     {stat.suffix}
                   </div>
-                  <div className="text-base text-muted-foreground">{stat.label}</div>
+                  <div className="text-sm text-muted-foreground">{stat.label}</div>
                 </Card>
               </motion.div>
             );
