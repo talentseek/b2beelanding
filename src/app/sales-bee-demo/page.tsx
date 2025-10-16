@@ -31,10 +31,6 @@ const DEMO_DATA = {
     'Prime Solutions Group',
     'Summit Business Partners',
     'Vertex Enterprises',
-    'Nexus Professional Services',
-    'Apex Strategy Group',
-    'Elite Business Solutions',
-    'Catalyst Growth Partners',
   ],
   leads: [
     { name: 'Sarah Johnson', company: 'Acme Consulting Ltd', title: 'Managing Director' },
@@ -287,33 +283,43 @@ function FindingCompaniesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.3 });
   const [visibleCompanies, setVisibleCompanies] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   useEffect(() => {
     if (!isInView) {
       setVisibleCompanies(0);
+      setIsAnimating(false);
       return;
     }
 
+    if (isAnimating) return;
+
+    setIsAnimating(true);
+    let currentCount = 0;
+
     const interval = setInterval(() => {
-      setVisibleCompanies((prev) => {
-        if (prev < DEMO_DATA.companies.length) {
-          return prev + 1;
-        } else {
-          setTimeout(() => setVisibleCompanies(0), 2000);
-          return prev;
-        }
-      });
-    }, 300);
+      if (currentCount < DEMO_DATA.companies.length) {
+        currentCount++;
+        setVisibleCompanies(currentCount);
+      } else {
+        clearInterval(interval);
+        // Reset after showing all
+        setTimeout(() => {
+          setVisibleCompanies(0);
+          setIsAnimating(false);
+        }, 2500);
+      }
+    }, 400);
 
     return () => clearInterval(interval);
-  }, [isInView]);
+  }, [isInView, isAnimating]);
 
   return (
     <section
       ref={ref}
       className="min-h-screen flex items-center justify-center px-4 py-20 bg-gradient-to-br from-blue-50 to-cyan-50 dark:from-blue-950/20 dark:to-cyan-900/10"
     >
-      <div className="max-w-5xl mx-auto w-full">
+      <div className="max-w-4xl mx-auto w-full">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -330,24 +336,24 @@ function FindingCompaniesSection() {
           </p>
         </motion.div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-2 gap-4 max-w-3xl mx-auto">
           {DEMO_DATA.companies.slice(0, visibleCompanies).map((company, index) => (
             <motion.div
-              key={index}
+              key={`${company}-${index}`}
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: index * 0.1 }}
+              transition={{ duration: 0.3 }}
             >
-              <Card className="p-6 bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
-                <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-amber-500/20 flex items-center justify-center">
-                    <Building2 className="w-6 h-6 text-[oklch(0.65_0.22_45)]" />
+              <Card className="p-5 bg-white dark:bg-gray-800 shadow-lg hover:shadow-xl transition-shadow">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-[oklch(0.65_0.22_45)]/20 to-amber-500/20 flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-semibold text-lg">{company}</h3>
-                    <p className="text-sm text-muted-foreground">Active company</p>
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-semibold text-base truncate">{company}</h3>
+                    <p className="text-xs text-muted-foreground">Active company</p>
                   </div>
-                  <CheckCircle2 className="w-6 h-6 text-green-500" />
+                  <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />
                 </div>
               </Card>
             </motion.div>
