@@ -477,6 +477,7 @@ function BuildingSequencesSection() {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: false, amount: 0.3 });
   const [activeStep, setActiveStep] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const sequence = [
     { icon: Linkedin, label: 'LinkedIn Connection Request', color: 'blue', delay: '+0 days' },
@@ -489,22 +490,32 @@ function BuildingSequencesSection() {
   useEffect(() => {
     if (!isInView) {
       setActiveStep(0);
+      setIsAnimating(false);
       return;
     }
 
-    const interval = setInterval(() => {
-      setActiveStep((prev) => {
-        if (prev < sequence.length) {
-          return prev + 1;
-        } else {
-          setTimeout(() => setActiveStep(0), 2000);
-          return prev;
-        }
-      });
-    }, 800);
+    if (isAnimating) return;
 
-    return () => clearInterval(interval);
-  }, [isInView, sequence.length]);
+    setIsAnimating(true);
+    let currentStep = 0;
+
+    // Small delay before starting
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        if (currentStep < sequence.length) {
+          currentStep++;
+          setActiveStep(currentStep);
+        } else {
+          clearInterval(interval);
+          // Reset after showing all
+          setTimeout(() => {
+            setActiveStep(0);
+            setIsAnimating(false);
+          }, 2500);
+        }
+      }, 800);
+    }, 300);
+  }, [isInView, isAnimating, sequence.length]);
 
   return (
     <section
