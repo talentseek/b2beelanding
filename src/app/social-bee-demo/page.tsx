@@ -37,7 +37,6 @@ const DEMO_POSTS = [
 
 export default function SocialBeeDemoPage() {
   const [step, setStep] = useState<'idle' | 'generating' | 'reviewing' | 'scheduling' | 'complete'>('idle');
-  const [currentPostIndex, setCurrentPostIndex] = useState(0);
   const [typedText, setTypedText] = useState('');
   const [approvedPosts, setApprovedPosts] = useState<number[]>([]);
   
@@ -64,7 +63,6 @@ export default function SocialBeeDemoPage() {
       for (let i = 0; i < DEMO_POSTS.length; i++) {
         await new Promise(resolve => setTimeout(resolve, 1500));
         setApprovedPosts(prev => [...prev, i]);
-        setCurrentPostIndex(i);
       }
 
       // Move to scheduling
@@ -80,7 +78,6 @@ export default function SocialBeeDemoPage() {
       setStep('idle');
       setTypedText('');
       setApprovedPosts([]);
-      setCurrentPostIndex(0);
     };
 
     runDemo();
