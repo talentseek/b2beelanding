@@ -12,7 +12,6 @@ import {
   Clock,
   ThumbsUp,
   Image as ImageIcon,
-  Hash,
 } from 'lucide-react';
 
 const DEMO_POSTS = [
@@ -43,7 +42,6 @@ export default function SocialBeeDemoPage() {
   const [approvedPosts, setApprovedPosts] = useState<number[]>([]);
   
   const calLink = process.env.NEXT_PUBLIC_CALCOM_LINK || 'https://cal.com/b2bee';
-  const currentPost = DEMO_POSTS[currentPostIndex];
 
   useEffect(() => {
     const runDemo = async () => {
@@ -324,7 +322,7 @@ export default function SocialBeeDemoPage() {
                       <ThumbsUp className="w-8 h-8 text-green-500" />
                       <div>
                         <h4 className="font-semibold text-green-700 dark:text-green-400">
-                          Perfect! You're all set
+                          Perfect! You&apos;re all set
                         </h4>
                         <p className="text-sm text-green-600 dark:text-green-500">
                           Social Bee will post automatically at the scheduled times

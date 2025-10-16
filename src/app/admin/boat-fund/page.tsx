@@ -79,7 +79,6 @@ export default function BoatFundPage() {
   };
 
   const percentage = Math.min((totalAmount / GOAL) * 100, 100);
-  const boatPosition = percentage;
   const formatCurrency = (pence: number) => `£${(pence / 100).toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
   if (loading) {
