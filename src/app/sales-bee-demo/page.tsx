@@ -530,8 +530,8 @@ function BuildingSequencesSection() {
           </p>
         </motion.div>
 
-        <Card className="p-6 bg-white dark:bg-gray-800 shadow-2xl">
-          <div className="space-y-4">
+        <Card className="p-4 bg-white dark:bg-gray-800 shadow-2xl">
+          <div className="space-y-2">
             {sequence.map((step, index) => {
               const Icon = step.icon;
               const isActive = index < activeStep;
@@ -546,41 +546,41 @@ function BuildingSequencesSection() {
                   className="relative"
                 >
                   <div
-                    className={`flex items-center gap-3 p-3 rounded-lg transition-all ${
+                    className={`flex items-center gap-2 p-2 rounded-lg transition-all ${
                       isCurrent
                         ? 'bg-[oklch(0.65_0.22_45)]/10 border-2 border-[oklch(0.65_0.22_45)]'
                         : 'bg-gray-50 dark:bg-gray-900'
                     }`}
                   >
                     <div
-                      className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+                      className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${
                         step.color === 'blue'
                           ? 'bg-blue-100 dark:bg-blue-900'
                           : 'bg-green-100 dark:bg-green-900'
                       }`}
                     >
                       <Icon
-                        className={`w-5 h-5 ${
+                        className={`w-4 h-4 ${
                           step.color === 'blue' ? 'text-blue-600' : 'text-green-600'
                         }`}
                       />
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-base truncate">{step.label}</h3>
+                      <h3 className="font-semibold text-sm truncate">{step.label}</h3>
                       <p className="text-xs text-muted-foreground">{step.delay}</p>
                     </div>
-                    {isActive && <CheckCircle2 className="w-5 h-5 text-green-500 flex-shrink-0" />}
+                    {isActive && <CheckCircle2 className="w-4 h-4 text-green-500 flex-shrink-0" />}
                     {isCurrent && (
                       <motion.div
                         animate={{ scale: [1, 1.2, 1] }}
                         transition={{ duration: 1, repeat: Infinity }}
                       >
-                        <MessageSquare className="w-5 h-5 text-[oklch(0.65_0.22_45)]" />
+                        <MessageSquare className="w-4 h-4 text-[oklch(0.65_0.22_45)]" />
                       </motion.div>
                     )}
                   </div>
                   {index < sequence.length - 1 && (
-                    <div className="w-0.5 h-4 bg-gray-200 dark:bg-gray-700 ml-5 my-1" />
+                    <div className="w-0.5 h-2 bg-gray-200 dark:bg-gray-700 ml-4 my-0.5" />
                   )}
                 </motion.div>
               );
@@ -591,11 +591,11 @@ function BuildingSequencesSection() {
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              className="mt-4 p-3 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"
+              className="mt-3 p-2 bg-green-50 dark:bg-green-900/20 rounded-lg border border-green-200 dark:border-green-800"
             >
               <div className="flex items-center gap-2 text-green-700 dark:text-green-400">
                 <CheckCircle2 className="w-4 h-4 flex-shrink-0" />
-                <span className="font-medium text-sm">Sequence ready! AI has personalized all messages.</span>
+                <span className="font-medium text-xs">Sequence ready! AI has personalized all messages.</span>
               </div>
             </motion.div>
           )}
