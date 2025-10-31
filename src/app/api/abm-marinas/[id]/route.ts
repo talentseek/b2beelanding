@@ -1,14 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { db } from '@/lib/db';
 
 // GET single marina ABM page
 export async function GET(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const page = await prisma.aBMMarinasPage.findUnique({
-      where: { id: params.id },
+    const { id } = await params;
+    const page = await db.aBMMarinasPage.findUnique({
+      where: { id },
     });
 
     if (!page) {
@@ -28,9 +29,10 @@ export async function GET(
 // PUT update marina ABM page
 export async function PUT(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
+    const { id } = await params;
     const body = await req.json();
 
     const {
@@ -44,8 +46,8 @@ export async function PUT(
       isActive,
     } = body;
 
-    const page = await prisma.aBMMarinasPage.update({
-      where: { id: params.id },
+    const page = await db.aBMMarinasPage.update({
+      where: { id },
       data: {
         linkedinIdentifier,
         linkedinUrl,
@@ -71,11 +73,12 @@ export async function PUT(
 // DELETE marina ABM page
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await prisma.aBMMarinasPage.delete({
-      where: { id: params.id },
+    const { id } = await params;
+    await db.aBMMarinasPage.delete({
+      where: { id },
     });
 
     return NextResponse.json({ success: true });

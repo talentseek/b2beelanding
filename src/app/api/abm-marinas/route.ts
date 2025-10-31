@@ -1,10 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { prisma } from '@/lib/prisma';
+import { db } from '@/lib/db';
 
 // GET all marina ABM pages
 export async function GET() {
   try {
-    const pages = await prisma.aBMMarinasPage.findMany({
+    const pages = await db.aBMMarinasPage.findMany({
       orderBy: { createdAt: 'desc' },
     });
 
@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const page = await prisma.aBMMarinasPage.create({
+    const page = await db.aBMMarinasPage.create({
       data: {
         linkedinIdentifier,
         linkedinUrl,

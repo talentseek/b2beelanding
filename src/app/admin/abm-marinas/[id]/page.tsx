@@ -1,22 +1,37 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ABMMarinaForm } from '@/components/abm-marina-form';
 import { ArrowLeft } from 'lucide-react';
 
-export default function EditMarinaPageAdmin({ params }: { params: { id: string } }) {
-  const [pageData, setPageData] = useState<any>(null);
+type MarinaPageData = {
+  id: string;
+  linkedinIdentifier: string;
+  linkedinUrl: string;
+  firstName: string;
+  lastName: string;
+  title: string;
+  company: string;
+  heroMessage: string;
+  isActive: boolean;
+};
+
+export default function EditMarinaPageAdmin({ params }: { params: Promise<{ id: string }> }) {
+  const [pageData, setPageData] = useState<MarinaPageData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [pageId, setPageId] = useState<string | null>(null);
 
   useEffect(() => {
-    fetchPage();
-  }, []);
+    params.then((p) => setPageId(p.id));
+  }, [params]);
 
-  const fetchPage = async () => {
+  const fetchPage = useCallback(async () => {
+    if (!pageId) return;
+    
     try {
-      const res = await fetch(`/api/abm-marinas/${params.id}`);
+      const res = await fetch(`/api/abm-marinas/${pageId}`);
       const data = await res.json();
       setPageData(data.page);
     } catch (error) {
@@ -24,7 +39,11 @@ export default function EditMarinaPageAdmin({ params }: { params: { id: string }
     } finally {
       setIsLoading(false);
     }
-  };
+  }, [pageId]);
+
+  useEffect(() => {
+    fetchPage();
+  }, [fetchPage]);
 
   if (isLoading) {
     return (

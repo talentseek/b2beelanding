@@ -1,14 +1,15 @@
 import { notFound } from 'next/navigation';
-import { prisma } from '@/lib/prisma';
+import { db } from '@/lib/db';
 import { SmartMarinaPageClient } from '@/components/smart-marina-page-client';
 
 export async function generateMetadata({
   params,
 }: {
-  params: { identifier: string };
+  params: Promise<{ identifier: string }>;
 }) {
-  const page = await prisma.aBMMarinasPage.findUnique({
-    where: { linkedinIdentifier: params.identifier },
+  const { identifier } = await params;
+  const page = await db.aBMMarinasPage.findUnique({
+    where: { linkedinIdentifier: identifier },
   });
 
   if (!page) {
@@ -26,10 +27,11 @@ export async function generateMetadata({
 export default async function SmartMarinaABMPage({
   params,
 }: {
-  params: { identifier: string };
+  params: Promise<{ identifier: string }>;
 }) {
-  const page = await prisma.aBMMarinasPage.findUnique({
-    where: { linkedinIdentifier: params.identifier },
+  const { identifier } = await params;
+  const page = await db.aBMMarinasPage.findUnique({
+    where: { linkedinIdentifier: identifier },
   });
 
   if (!page || !page.isActive) {
