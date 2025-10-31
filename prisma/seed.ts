@@ -518,6 +518,34 @@ async function main() {
   }
 
   console.log('✅ Boat fund seeded with', boatContributions.length, 'contributions');
+
+  // Create Marina ABM Pages
+  console.log('⚓ Creating marina ABM pages...');
+  
+  const marinaPage = await prisma.aBMMarinasPage.upsert({
+    where: { linkedinIdentifier: 'james-harrison-marina-director' },
+    update: {
+      linkedinUrl: 'https://www.linkedin.com/in/james-harrison-marina/',
+      firstName: 'James',
+      lastName: 'Harrison',
+      title: 'Marina Director',
+      company: 'Solent Harbour Marina',
+      heroMessage: null, // Will use default
+      isActive: true,
+    },
+    create: {
+      linkedinIdentifier: 'james-harrison-marina-director',
+      linkedinUrl: 'https://www.linkedin.com/in/james-harrison-marina/',
+      firstName: 'James',
+      lastName: 'Harrison',
+      title: 'Marina Director',
+      company: 'Solent Harbour Marina',
+      heroMessage: null,
+      isActive: true,
+    },
+  });
+
+  console.log('✅ Created marina ABM page:', `${marinaPage.firstName} ${marinaPage.lastName}`);
 }
 
 main()

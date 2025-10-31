@@ -195,3 +195,23 @@ model BoatFundContribution {
 
   @@index([createdAt])
 }
+
+model ABMMarinasPage {
+  id                 String   @id @default(cuid())
+  linkedinIdentifier String   @unique // e.g. "john-smith-harbour-master"
+  linkedinUrl        String // Full LinkedIn URL
+  firstName          String
+  lastName           String
+  title              String? // Job title
+  company            String // Marina name
+  
+  // Personalization
+  heroMessage        String? // Custom hero message
+  
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  @@index([linkedinIdentifier])
+  @@index([isActive])
+}

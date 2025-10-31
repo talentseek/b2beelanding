@@ -45,6 +45,12 @@ export default function AdminLayout({ children }: { children: ReactNode }) {
               ABM Pages
             </Link>
             <Link
+              href="/admin/abm-marinas"
+              className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1"
+            >
+              ⚓ ABM Marinas
+            </Link>
+            <Link
               href="/admin/boat-fund"
               className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-1"
             >
